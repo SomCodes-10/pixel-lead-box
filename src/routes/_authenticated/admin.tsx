@@ -1,9 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { LEAD_STATUSES, type Lead, type LeadStatus } from "@/lib/leads-schema";
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({
     meta: [
       { title: "Admin — LeadDesk Mini" },
@@ -17,9 +17,11 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
+  const navigate = useNavigate();
   const [leads, setLeads] = useState<Lead[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
+  const [signingOut, setSigningOut] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -47,14 +49,17 @@ function AdminPage() {
   }, [leads, query]);
 
   async function updateStatus(id: string, status: LeadStatus) {
-    // Optimistic update
     setLeads((prev) =>
       prev ? prev.map((l) => (l.id === id ? { ...l, status } : l)) : prev,
     );
     const { error } = await supabase.from("leads").update({ status }).eq("id", id);
-    if (error) {
-      setError(error.message);
-    }
+    if (error) setError(error.message);
+  }
+
+  async function handleSignOut() {
+    setSigningOut(true);
+    await supabase.auth.signOut();
+    navigate({ to: "/login", replace: true });
   }
 
   return (
@@ -69,13 +74,22 @@ function AdminPage() {
               {leads ? `${filtered.length} of ${leads.length}` : "Loading…"}
             </p>
           </div>
-          <input
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search by name or email…"
-            className="w-full max-w-xs rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-          />
+          <div className="flex items-center gap-2">
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search by name or email…"
+              className="w-full max-w-xs rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground shadow-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+            />
+            <button
+              onClick={handleSignOut}
+              disabled={signingOut}
+              className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent disabled:opacity-50"
+            >
+              {signingOut ? "Logging out…" : "Log out"}
+            </button>
+          </div>
         </header>
 
         {error && (
