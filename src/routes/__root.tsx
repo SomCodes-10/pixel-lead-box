@@ -77,14 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
+      { title: "LeadDesk Mini — Get in touch" },
+      { name: "description", content: "Tell us about your project. Send a message with your budget and we'll get back to you." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "LeadDesk Mini — Get in touch" },
+      { property: "og:description", content: "Tell us about your project. Send a message with your budget and we'll get back to you." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "LeadDesk Mini — Get in touch" },
+      { name: "twitter:description", content: "Tell us about your project. Send a message with your budget and we'll get back to you." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d6095c8c-7a5c-48f8-bac9-34a8c04476fc" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/d6095c8c-7a5c-48f8-bac9-34a8c04476fc" },
     ],
     links: [
       {
