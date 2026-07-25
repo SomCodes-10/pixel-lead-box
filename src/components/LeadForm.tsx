@@ -143,7 +143,8 @@ export function LeadForm() {
         <button
           type="submit"
           disabled={submitting}
-          className="inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-60"
+          style={{ backgroundImage: "var(--gradient-warm)", boxShadow: "var(--shadow-soft)" }}
+          className="inline-flex w-full items-center justify-center rounded-md px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-all hover:opacity-95 hover:-translate-y-0.5 disabled:opacity-60 disabled:translate-y-0"
         >
           {submitting ? "Sending…" : "Send message"}
         </button>
