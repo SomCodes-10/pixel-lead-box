@@ -5,7 +5,7 @@ A lead-capture app with a public form and an authenticated admin dashboard.
 **Live URLs**
 - Public site: https://pixel-lead-box.lovable.app/
 - Admin: https://pixel-lead-box.lovable.app/admin
-- Test credentials: `<ADMIN_EMAIL>` / `<ADMIN_PASSWORD>` — [fill in the account you created]
+- Test credentials: `somrajdeb25@gmail.com` / `hisom100` — [fill in the account you created]
 
 ---
 
